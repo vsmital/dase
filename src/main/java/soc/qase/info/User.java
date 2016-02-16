@@ -8,17 +8,20 @@ package soc.qase.info;
 
 /*-------------------------------------------------------------------*/
 
+import org.apache.commons.lang.StringUtils;
+
 /**    User information wrapper. The User class is employed when an agent
  *	connects to the simulator environment using a Proxy object, supplying
  *	the environment with basic information required by a Quake2 server. */
 /*-------------------------------------------------------------------*/
 public class User {
-    private String name = null;
-    private String skin = null;
-    private int rate = 0;
-    private int message = 0;
-    private int fov = 0;
-    private int hand = 0;
+    private String name = "DASE_bot";
+    private String model = "models/global/m_hiro.dkm";
+    private String skin = "skins/hiro_bod_1.wal";
+    private int rate = 30000;
+    private int message = 1;
+    private int fov = 90;
+    private int hand = HAND_RIGHT;
     private String password = null;
 
     public static final int HAND_RIGHT = 0, HAND_LEFT = 1, HAND_CENTER = 2;
@@ -28,12 +31,30 @@ public class User {
             KEY_CHAINGUN = 5, KEY_GRENADE_LAUNCHER = 6, KEY_ROCKET_LAUNCHER = 7,
             KEY_HYPERBLASTER = 8, KEY_RAILGUN = 9, KEY_BFG = 0;
 
+    /**
+     * Default constructor
+     */
 /*-------------------------------------------------------------------*/
+    public User() {
+        //nothing to do
+    }
+
 
     /**    Constructor. Records the user's specified options.
      *    @param name the name by which the agent will be known by other
      *	agents interacting with the environment.
-     *	@param skin the rendering model to be used by an agent; it defines
+     */
+/*-------------------------------------------------------------------*/
+    public User(final String name) {
+        setName(name);
+    }
+
+
+    /**    Constructor. Records the user's specified options.
+     *    @param name the name by which the agent will be known by other
+     *	agents interacting with the environment.
+     *  @param model the WAL model to be used by an agent
+     *	@param skin the rendering skin to be used by an agent; it defines
      *	in what way another agent, making use of environment visualization,
      *	will perceive the agent.
      *	@param rate defines the data receive rate of a Quake2 client and is
@@ -52,8 +73,11 @@ public class User {
      *	for security, and as such may optionally define a password to be used
      *	by connecting parties */
 /*-------------------------------------------------------------------*/
-    public User(String name, String skin, int rate, int message, int fov, int hand, String password) {
+    public User(String name, String model, String skin, Integer rate, Integer message, Integer fov, Integer hand, String password) {
         setName(name);
+        if (model != null && model.length() > 0) {
+            this.model = model;
+        }
         setSkin(skin);
         setRate(rate);
         setMessage(message);
@@ -61,23 +85,34 @@ public class User {
         setHand(hand);
         setPassword(password);
     }
-
 /*-------------------------------------------------------------------*/
 
     /**    Set user name.
      *    @param name user name. */
 /*-------------------------------------------------------------------*/
-    public void setName(String name) {
+    public void setName(final String name) {
+        if (StringUtils.isNotEmpty(name)) {
+            this.name = name;
+        }
         this.name = name;
     }
 
+    /**   Sets user model.
+     *   @param model users model. */
 /*-------------------------------------------------------------------*/
+    public void setModel(final String model) {
+        if (StringUtils.isNotEmpty(model)) {
+            this.model = model;
+        }
+    }
 
     /**    Set user skin.
      *    @param skin user skin. */
 /*-------------------------------------------------------------------*/
-    public void setSkin(String skin) {
-        this.skin = skin;
+    public void setSkin(final String skin) {
+        if (StringUtils.isNotEmpty(skin)) {
+            this.skin = skin;
+        }
     }
 
 
@@ -86,8 +121,10 @@ public class User {
     /**    Set data receive rate.
      *    @param rate data receive rate. */
 /*-------------------------------------------------------------------*/
-    public void setRate(int rate) {
-        this.rate = rate;
+    public void setRate(final Integer rate) {
+        if (rate != null && rate > 0) {
+            this.rate = rate;
+        }
     }
 
 /*-------------------------------------------------------------------*/
@@ -96,8 +133,10 @@ public class User {
      *	is interested in.
      *    @param message user message level. */
 /*-------------------------------------------------------------------*/
-    public void setMessage(int message) {
-        this.message = message;
+    public void setMessage(final Integer message) {
+        if (message != null) {
+            this.message = message;
+        }
     }
 
 /*-------------------------------------------------------------------*/
@@ -105,8 +144,10 @@ public class User {
     /**    Set user field of view.
      *    @param fov user field of view. */
 /*-------------------------------------------------------------------*/
-    public void setFov(int fov) {
-        this.fov = fov;
+    public void setFov(final Integer fov) {
+        if (fov != null && fov > 0) {
+            this.fov = fov;
+        }
     }
 
 /*-------------------------------------------------------------------*/
@@ -114,8 +155,10 @@ public class User {
     /**    Set user hand. 0 for right, 1 for left, 2 for centre (invisible)
      *    @param hand user hand. */
 /*-------------------------------------------------------------------*/
-    public void setHand(int hand) {
-        this.hand = hand;
+    public void setHand(final Integer hand) {
+        if (hand != null && hand >= 0 && hand <= 2) {
+            this.hand = hand;
+        }
     }
 
 /*-------------------------------------------------------------------*/

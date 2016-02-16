@@ -37,10 +37,11 @@ public abstract class NoClipBot extends ObserverBot {
     /**    Constructor allowing the user to specify a name and skin (appearance)
      *	for the agent.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin) {
-        super((botName == null ? "NoClipBot" : botName), botSkin);
+    public NoClipBot(final String botName, final String botModel, final String botSkin) {
+        super((botName == null ? "NoClipBot" : botName), botModel, botSkin);
     }
 
 /*-------------------------------------------------------------------*/
@@ -48,12 +49,13 @@ public abstract class NoClipBot extends ObserverBot {
     /**    Constructor allowing the user to specify a name, skin, and initial
      *	starting position.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param initialPosition the position to which the agent should move
      *	before entering the game as an active participant */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin, Vector3f initialPosition) {
-        super((botName == null ? "MatLabNoClipBot" : botName), botSkin);
+    public NoClipBot(final String botName, final String botModel, final String botSkin, final Vector3f initialPosition) {
+        super((botName == null ? "MatLabNoClipBot" : botName), botModel, botSkin);
         clipToPosition(initialPosition);
     }
 
@@ -63,11 +65,12 @@ public abstract class NoClipBot extends ObserverBot {
      *	starting position, and whether the agent should manually track
      *	its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin, boolean trackInv) {
-        super((botName == null ? "NoClipBot" : botName), botSkin, trackInv);
+    public NoClipBot(final String botName, final String botModel, final String botSkin, boolean trackInv) {
+        super((botName == null ? "NoClipBot" : botName), botModel, botSkin, trackInv);
     }
 
 /*-------------------------------------------------------------------*/
@@ -76,13 +79,14 @@ public abstract class NoClipBot extends ObserverBot {
      *	starting position, and whether the agent should manually track its
      *	inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param initialPosition the position to which the agent should move
      *	before entering the game as an active participant
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin, Vector3f initialPosition, boolean trackInv) {
-        super((botName == null ? "MatLabNoClipBot" : botName), botSkin, trackInv);
+    public NoClipBot(final String botName, final String botModel, final String botSkin, final Vector3f initialPosition, boolean trackInv) {
+        super((botName == null ? "MatLabNoClipBot" : botName), botModel, botSkin, trackInv);
         clipToPosition(initialPosition);
     }
 
@@ -92,14 +96,16 @@ public abstract class NoClipBot extends ObserverBot {
      *	starting position, whether the agent should operate in high thread
      *	safety mode, and whether it should manually track its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param initialPosition the position to which the agent should move
      *	before entering the game as an active participant
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin, Vector3f initialPosition, boolean highThreadSafety, boolean trackInv) {
-        super((botName == null ? "NoClipBot" : botName), botSkin, highThreadSafety, trackInv);
+    public NoClipBot(final String botName, final String botModel, final String botSkin, final Vector3f initialPosition, boolean highThreadSafety,
+            boolean trackInv) {
+        super((botName == null ? "NoClipBot" : botName), botModel, botSkin, highThreadSafety, trackInv);
         clipToPosition(initialPosition);
     }
 
@@ -110,6 +116,7 @@ public abstract class NoClipBot extends ObserverBot {
      *	in high thread safety mode, and whether it should manually track its
      *	inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param initialPosition the position to which the agent should move
      *	before entering the game as an active participant
@@ -117,8 +124,8 @@ public abstract class NoClipBot extends ObserverBot {
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin, Vector3f initialPosition, String password, boolean highThreadSafety, boolean trackInv) {
-        super((botName == null ? "NoClipBot" : botName), botSkin, password, highThreadSafety, trackInv);
+    public NoClipBot(String botName, String botModel, String botSkin, Vector3f initialPosition, String password, boolean highThreadSafety, boolean trackInv) {
+        super((botName == null ? "NoClipBot" : botName), botModel, botSkin, password, highThreadSafety, trackInv);
         clipToPosition(initialPosition);
     }
 
@@ -130,6 +137,7 @@ public abstract class NoClipBot extends ObserverBot {
      *	in, server password, whether the agent should operate in high thread
      *	safety mode, and whether it should manually track its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param initialPosition the position to which the agent should move
      *	before entering the game as an active participant
@@ -141,9 +149,10 @@ public abstract class NoClipBot extends ObserverBot {
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public NoClipBot(String botName, String botSkin, Vector3f initialPosition, int recvRate, int msgLevel, int fov, int hand, String password,
+    public NoClipBot(final String botName, final String botModel, final String botSkin, final Vector3f initialPosition, int recvRate, int msgLevel, int fov,
+            int hand, final String password,
             boolean highThreadSafety, boolean trackInv) {
-        super((botName == null ? "NoClipBot" : botName), botSkin, recvRate, msgLevel, fov, hand, password, highThreadSafety, trackInv);
+        super((botName == null ? "NoClipBot" : botName), botModel, botSkin, recvRate, msgLevel, fov, hand, password, highThreadSafety, trackInv);
         clipToPosition(initialPosition);
     }
 

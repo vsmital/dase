@@ -26,11 +26,11 @@ public class BotManager extends Thread {
 
         for (int i = 0; i < 5; i++) {
             if (i % 2 == 1)
-                botArray[i] = new SampleObserverBot("ObserverBot_0" + i, null);
+                botArray[i] = new SampleObserverBot("ObserverBot_0" + i, null, null);
             else
-                botArray[i] = new SamplePollingBot("PollingBot_0" + i, null);
+                botArray[i] = new SamplePollingBot("PollingBot_0" + i, null, null);
 
-            botArray[i].connect("127.0.0.1", -1);
+            botArray[i].connect("127.0.0.1", 27992);
         }
 
         try {

@@ -36,10 +36,11 @@ public abstract class ObserverBot extends BasicBot implements Observer {
     /**    Constructor allowing the user to specify a name and skin (appearance)
      *	for the agent.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's models
      *	@param botSkin specifies the character's in-game appearance */
 /*-------------------------------------------------------------------*/
-    public ObserverBot(String botName, String botSkin) {
-        super((botName == null ? "ObserverBot" : botName), botSkin);
+    public ObserverBot(final String botName, final String botModel, final String botSkin) {
+        super((botName == null ? "ObserverBot" : botName), botModel, botSkin);
     }
 
 /*-------------------------------------------------------------------*/
@@ -47,11 +48,12 @@ public abstract class ObserverBot extends BasicBot implements Observer {
     /**    Constructor allowing the user to specify a name, skin, and whether
      *	the agent should manually track its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's models
      *	@param botSkin specifies the character's in-game appearance
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public ObserverBot(String botName, String botSkin, boolean trackInv) {
-        super((botName == null ? "ObserverBot" : botName), botSkin, trackInv);
+    public ObserverBot(final String botName, final String botModel, final String botSkin, boolean trackInv) {
+        super((botName == null ? "ObserverBot" : botName), botModel, botSkin, trackInv);
     }
 
 /*-------------------------------------------------------------------*/
@@ -60,12 +62,13 @@ public abstract class ObserverBot extends BasicBot implements Observer {
      *	agent should operate in high thread safety mode, and whether it
      *	should manually track its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's models
      *	@param botSkin specifies the character's in-game appearance
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public ObserverBot(String botName, String botSkin, boolean highThreadSafety, boolean trackInv) {
-        super((botName == null ? "ObserverBot" : botName), botSkin, highThreadSafety, trackInv);
+    public ObserverBot(final String botName, final String botModel, final String botSkin, boolean highThreadSafety, boolean trackInv) {
+        super((botName == null ? "ObserverBot" : botName), botModel, botSkin, highThreadSafety, trackInv);
     }
 
 /*-------------------------------------------------------------------*/
@@ -74,13 +77,14 @@ public abstract class ObserverBot extends BasicBot implements Observer {
      *	whether the agent should operate in high thread safety mode, and whether
      *	it should manually track its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's models
      *	@param botSkin specifies the character's in-game appearance
      *	@param password the password of the server, if necessary
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public ObserverBot(String botName, String botSkin, String password, boolean highThreadSafety, boolean trackInv) {
-        super((botName == null ? "ObserverBot" : botName), botSkin, password, highThreadSafety, trackInv);
+    public ObserverBot(final String botName, final String botModel, final String botSkin, final String password, boolean highThreadSafety, boolean trackInv) {
+        super((botName == null ? "ObserverBot" : botName), botModel, botSkin, password, highThreadSafety, trackInv);
     }
 
 /*-------------------------------------------------------------------*/
@@ -91,6 +95,7 @@ public abstract class ObserverBot extends BasicBot implements Observer {
      *	whether the agent should operate in high thread safety mode, and whether
      *	it should manually track its inventory.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's models
      *	@param botSkin specifies the character's in-game appearance
      *	@param recvRate rate at which the client communicates with server
      *	@param msgLevel specifies which server messages to register interest in
@@ -100,9 +105,10 @@ public abstract class ObserverBot extends BasicBot implements Observer {
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public ObserverBot(String botName, String botSkin, int recvRate, int msgLevel, int fov, int hand, String password, boolean highThreadSafety,
+    public ObserverBot(final String botName, final String botModel, final String botSkin, int recvRate, int msgLevel, int fov, int hand, final String password,
+            boolean highThreadSafety,
             boolean trackInv) {
-        super((botName == null ? "ObserverBot" : botName), botSkin, recvRate, msgLevel, fov, hand, password, highThreadSafety, trackInv);
+        super((botName == null ? "ObserverBot" : botName), botModel, botSkin, recvRate, msgLevel, fov, hand, password, highThreadSafety, trackInv);
     }
 
 /*-------------------------------------------------------------------*/

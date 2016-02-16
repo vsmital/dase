@@ -33,12 +33,13 @@ public final class SampleNoClipBot extends NoClipBot {
     /**    Constructor allowing the user to specify a name, skin, and initial
      *	starting position.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance
      *	@param initialPosition the position to which the agent should move
      *	before entering the game as an active participant */
 /*-------------------------------------------------------------------*/
-    public SampleNoClipBot(String botName, String botSkin, Vector3f initialPosition) {
-        super(botName, botSkin, initialPosition);
+    public SampleNoClipBot(final String botName, final String botModel, final String botSkin, final Vector3f initialPosition) {
+        super(botName, botModel, botSkin, initialPosition);
     }
 
 /*-------------------------------------------------------------------*/

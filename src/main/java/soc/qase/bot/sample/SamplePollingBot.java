@@ -28,10 +28,11 @@ public final class SamplePollingBot extends PollingBot {
     /**    Constructor allowing the user to specify a name and skin (appearance)
      *	for the agent.
      *    @param botName name of the character during game session
+     *	@param botModel specifies the character's model
      *	@param botSkin specifies the character's in-game appearance */
 /*-------------------------------------------------------------------*/
-    public SamplePollingBot(String botName, String botSkin) {
-        super((botName == null ? "SamplePollingBot" : botName), botSkin);
+    public SamplePollingBot(final String botName, final String botModel, final String botSkin) {
+        super((botName == null ? "SamplePollingBot" : botName), botModel, botSkin);
     }
 
 /*-------------------------------------------------------------------*/

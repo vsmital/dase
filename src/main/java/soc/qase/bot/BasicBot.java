@@ -80,7 +80,7 @@ public abstract class BasicBot extends Thread implements Bot {
     /**    Default constructor. Creates the agent using default parameters. */
 /*-------------------------------------------------------------------*/
     public BasicBot() {
-        user = new User("QASE_Bot", "female/athena", 65535, 1, 90, User.HAND_RIGHT, "");
+        user = new User();
         commonSetup(false, true);
     }
 
@@ -88,11 +88,12 @@ public abstract class BasicBot extends Thread implements Bot {
 
     /**    Constructor allowing the user to specify a name and skin (appearance)
      *	for the agent.
-     *    @param botName name of the character during game session
+     *  @param botName name of the character during game session
+     *  @param botModel name of the character's model during game session
      *	@param botSkin specifies the character's in-game appearance */
 /*-------------------------------------------------------------------*/
-    public BasicBot(String botName, String botSkin) {
-        user = new User((botName == null ? "QASE_BasicBot" : botName), (botSkin == null ? "female/athena" : botSkin), 65535, 1, 90, User.HAND_RIGHT, "");
+    public BasicBot(final String botName, final String botModel, final String botSkin) {
+        user = new User(botName, botModel, botSkin, null, null, null, null, null);
         commonSetup(false, true);
     }
 
@@ -101,11 +102,12 @@ public abstract class BasicBot extends Thread implements Bot {
     /**    Constructor allowing the user to specify a name, skin, and whether
      *	it should manually track its inventory.
      *    @param botName name of the character during game session
+     *  @param botModel name of the character's model during game session
      *	@param botSkin specifies the character's in-game appearance
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public BasicBot(String botName, String botSkin, boolean trackInv) {
-        user = new User((botName == null ? "QASE_BasicBot" : botName), (botSkin == null ? "female/athena" : botSkin), 65535, 1, 90, User.HAND_RIGHT, "");
+    public BasicBot(final String botName, final String botModel, final String botSkin, boolean trackInv) {
+        user = new User(botName, botModel, botSkin, null, null, null, null, null);
         commonSetup(false, trackInv);
     }
 
@@ -115,12 +117,13 @@ public abstract class BasicBot extends Thread implements Bot {
      *	agent should operate in high thread safety mode, and whether it
      *	should manually track its inventory.
      *    @param botName name of the character during game session
+     *  @param botModel name of the character's model during game session
      *	@param botSkin specifies the character's in-game appearance
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public BasicBot(String botName, String botSkin, boolean highThreadSafety, boolean trackInv) {
-        user = new User((botName == null ? "QASE_BasicBot" : botName), (botSkin == null ? "female/athena" : botSkin), 65535, 1, 90, User.HAND_RIGHT, "");
+    public BasicBot(final String botName, final String botModel, final String botSkin, final boolean highThreadSafety, boolean trackInv) {
+        user = new User(botName, botModel, botSkin, null, null, null, null, null);
         commonSetup(highThreadSafety, trackInv);
     }
 
@@ -130,13 +133,14 @@ public abstract class BasicBot extends Thread implements Bot {
      *	whether the agent should operate in high thread safety mode, and whether
      *	it should manually track its inventory.
      *    @param botName name of the character during game session
+     *  @param botModel name of the character's model during game session
      *	@param botSkin specifies the character's in-game appearance
      *	@param password the password of the server, if necessary
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public BasicBot(String botName, String botSkin, String password, boolean highThreadSafety, boolean trackInv) {
-        user = new User((botName == null ? "QASE_BasicBot" : botName), (botSkin == null ? "female/athena" : botSkin), 65535, 1, 90, User.HAND_RIGHT, password);
+    public BasicBot(final String botName, final String botModel, final String botSkin, final String password, boolean highThreadSafety, boolean trackInv) {
+        user = new User(botName, botModel, botSkin, null, null, null, null, password);
         commonSetup(highThreadSafety, trackInv);
     }
 
@@ -148,6 +152,7 @@ public abstract class BasicBot extends Thread implements Bot {
      *	whether the agent should operate in high thread safety mode, and whether
      *	it should manually track its inventory.
      *    @param botName name of the character during game session
+     *  @param botModel name of the character's model during game session
      *	@param botSkin specifies the character's in-game appearance
      *	@param recvRate rate at which the client communicates with server
      *	@param msgLevel specifies which server messages to register interest in
@@ -157,9 +162,10 @@ public abstract class BasicBot extends Thread implements Bot {
      *	@param highThreadSafety if true, enables high thread safety mode
      *	@param trackInv if true, the agent will manually track its inventory */
 /*-------------------------------------------------------------------*/
-    public BasicBot(String botName, String botSkin, int recvRate, int msgLevel, int fov, int hand, String password, boolean highThreadSafety,
+    public BasicBot(final String botName, final String botModel, final String botSkin, final int recvRate, final int msgLevel, final int fov, final int hand,
+            final String password, boolean highThreadSafety,
             boolean trackInv) {
-        user = new User((botName == null ? "QASE_BasicBot" : botName), (botSkin == null ? "female/athena" : botSkin), (recvRate < 0 ? 65535 : recvRate),
+        user = new User(botName, botModel, botSkin, (recvRate < 0 ? 30000 : recvRate),
                 (msgLevel < 0 ? 1 : msgLevel), (fov < 0 ? 90 : fov), (hand < 0 ? User.HAND_RIGHT : hand), (password == null ? "" : password));
         commonSetup(highThreadSafety, trackInv);
     }
