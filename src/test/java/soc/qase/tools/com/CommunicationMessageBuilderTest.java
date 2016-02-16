@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.internal.runners.JUnit38ClassRunner;
 import org.junit.runner.RunWith;
+import soc.qase.info.User;
 
 /**
  * Created by Vojtech.Smital on 16.2.2016.
@@ -19,7 +20,8 @@ public class CommunicationMessageBuilderTest extends TestCase {
         final int clientID = 105;
         final String challengeNumber = "1247302201";
 
-        final String result = CommunicationMessageBuilder.buildConnectMessage(clientID, challengeNumber);
+
+        final String result = CommunicationMessageBuilder.buildConnectMessage(clientID, challengeNumber, new User("VojtBot"));
         assertEquals(expectedResult, result);
     }
 }

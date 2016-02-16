@@ -506,7 +506,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
             challengeNumber = packet.getMessage().toString().substring(10);
 
             sentConnect = true;
-            communicator.sendConnectionless(CommunicationMessageBuilder.buildConnectMessage(clientID, challengeNumber));
+            communicator.sendConnectionless(CommunicationMessageBuilder.buildConnectMessage(clientID, challengeNumber, user));
         } else if (sentConnect) {
             sentConnect = false;
             connectResult = packet.getMessage().toString();

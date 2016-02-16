@@ -75,13 +75,12 @@ public class User {
 /*-------------------------------------------------------------------*/
     public User(String name, String model, String skin, Integer rate, Integer message, Integer fov, Integer hand, String password) {
         setName(name);
-        if (model != null && model.length() > 0) {
-            this.model = model;
-        }
+        setModel(model);
         setSkin(skin);
         setRate(rate);
         setMessage(message);
         setFov(fov);
+        //TODO vsmital 16.2.2016 find out if hand position is even supported by Daikatana??s
         setHand(hand);
         setPassword(password);
     }
@@ -179,7 +178,12 @@ public class User {
         return name;
     }
 
+    /**    Returns model name
+     *     @return model name */
 /*-------------------------------------------------------------------*/
+    public String getModel() {
+        return model;
+    }
 
     /**    Get user skin.
      *    @return user skin. */
@@ -245,7 +249,8 @@ public class User {
         result += "rate" + "\\" + rate + "\\";
         result += "msg" + "\\" + message + "\\";
         result += "fov" + "\\" + fov + "\\";
-        result += "skin" + "\\" + skin + "\\";
+        result += "modelName" + "\\" + model + "\\";
+        result += "skinName" + "\\" + skin + "\\";
         result += "name" + "\\" + name + "\\";
         result += "hand" + "\\" + hand;
         return result;
