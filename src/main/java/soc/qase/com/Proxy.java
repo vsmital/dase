@@ -701,7 +701,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      *    @see #setHighThreadSafety(boolean)
      *	@see soc.qase.file.dm2.DM2Recorder */
 /*-------------------------------------------------------------------*/
-    private void processIncomingDataPacket(byte[] incomingData) {
+    void processIncomingDataPacket(byte[] incomingData) {
         Packet packet = null;
         Sequence sequenceOne = new Sequence(incomingData);
 
@@ -725,6 +725,14 @@ public class Proxy extends ServerMessageHandler implements Runnable {
                 }
             }
         }
+    }
+
+    void setUser(User user) {
+        this.user = user;
+    }
+
+    User getUser() {
+        return user;
     }
 }
 
