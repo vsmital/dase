@@ -56,8 +56,8 @@ public class ServerPacket extends Packet {
         else if (messageType == 10) message = new ServerPrint(data, off + 1);
         else if (messageType == 19) message = new ServerStuffText(data, off); //originally messageType == 11
         else if (messageType == 20) message = new ServerData(data, off + 1); //originally messageType == 12
-        else if (messageType == 13) message = new ServerConfigString(data, off + 1);
-        else if (messageType == 14) message = new ServerSpawnBaseline(data, off + 1);
+        else if (messageType == 21) message = new ServerConfigString(data, off + 1);
+        else if (messageType == 22) message = new ServerSpawnBaseline(data, off + 1);
         else if (messageType == 15) message = new ServerCenterPrint(data, off + 1);
         else if (messageType == 16) message = new ServerDownload(data, off + 1);
         else if (messageType == 17) message = new ServerPlayerInfo(data, off + 1);

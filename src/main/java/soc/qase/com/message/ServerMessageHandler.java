@@ -164,7 +164,10 @@ public abstract class ServerMessageHandler extends Observable {
         if (verbose)
             System.out.println("Processing: ServerConfigString - [" + message.getIndex() + " " + message.getConfigString() + "]");
 
-        world.getConfig().setConfigString(message.getIndex(), message.getConfigString());
+        //TODO vsmital 18:37 next if is probably only temporal
+        if (world != null && world.getConfig() != null) {
+            world.getConfig().setConfigString(message.getIndex(), message.getConfigString());
+        }
     }
 
     /*-------------------------------------------------------------------*/
