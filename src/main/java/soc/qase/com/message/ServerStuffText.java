@@ -22,8 +22,8 @@ public class ServerStuffText extends Message {
      *    @param data message source */
 /*-------------------------------------------------------------------*/
     public ServerStuffText(byte[] data, int off) {
-        int stringLength = Utils.stringLength(data, off);
-        stuffString = new String(Utils.stringValue(data, off, stringLength - 1));
+        int stringLength = Utils.stringLength(data, off + 1);
+        stuffString = new String(Utils.stringValue(data, off + 1, stringLength - 1));
         setLength(stringLength + 1);
     }
 
