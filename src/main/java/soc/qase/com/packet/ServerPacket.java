@@ -11,8 +11,10 @@ import soc.qase.com.message.ServerBad;
 import soc.qase.com.message.ServerCenterPrint;
 import soc.qase.com.message.ServerConfigString;
 import soc.qase.com.message.ServerData;
+import soc.qase.com.message.ServerDeltaPacketEntities;
 import soc.qase.com.message.ServerDisconnect;
 import soc.qase.com.message.ServerDownload;
+import soc.qase.com.message.ServerFrame;
 import soc.qase.com.message.ServerInventory;
 import soc.qase.com.message.ServerLayout;
 import soc.qase.com.message.ServerMonsterMuzzleFlash;
@@ -56,15 +58,15 @@ public class ServerPacket extends Packet {
         else if (messageType == 10) message = new ServerPrint(data, off + 1);
         else if (messageType == 19) message = new ServerStuffText(data, off); //originally messageType == 11
         else if (messageType == 20) message = new ServerData(data, off + 1); //originally messageType == 12
-        else if (messageType == 21) message = new ServerConfigString(data, off + 1);
-        else if (messageType == 22) message = new ServerSpawnBaseline(data, off + 1);
+        else if (messageType == 21) message = new ServerConfigString(data, off + 1); // 13
+        else if (messageType == 22) message = new ServerSpawnBaseline(data, off + 1); // 14
         else if (messageType == 15) message = new ServerCenterPrint(data, off + 1);
-        else if (messageType == 16) message = new ServerDownload(data, off + 1);
-        else if (messageType == 17) message = new ServerPlayerInfo(data, off + 1);
-        else if (messageType == 18) message = new ServerPacketEntities(data, off + 1);
-            //else if (messageType == 19) message = new ServerDeltaPacketEntities(data, off + 1);
-            //else if (messageType == 20) message = new ServerFrame(data, off + 1);
-        else if (messageType > 20) {
+        else if (messageType == 24) message = new ServerDownload(data, off + 1);
+        else if (messageType == 25) message = new ServerPlayerInfo(data, off + 1);
+        else if (messageType == 26) message = new ServerPacketEntities(data, off + 1);
+        else if (messageType == 27) message = new ServerDeltaPacketEntities(data, off + 1);
+        else if (messageType == 28) message = new ServerFrame(data, off + 1);
+        else if (messageType > 28) {
             messageType = 0;
             message = new ServerBad(data, off + 1);
         }

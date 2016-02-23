@@ -29,8 +29,10 @@ public class ServerDownload extends Message {
         size = (int) Utils.shortValue(data, off);
         percent = (int) data[off + 2];
 
-        if (size < 0)
+        if (size < 0) {
+            setLength(data.length - off);
             return;
+        }
 
         this.data = new byte[size];
 

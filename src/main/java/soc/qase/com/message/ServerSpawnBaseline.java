@@ -28,6 +28,8 @@ public class ServerSpawnBaseline extends Message {
     private byte[] data = null;
 
     private static float PI = (float) 3.1415926535;
+    //length of 00 00 00 80 3f 00 00 80 3f 00 00 80 3f 00 00 80 3f
+    private static final int GARBAGE_LENGTH = 17;
 
 /*-------------------------------------------------------------------*/
 
@@ -52,7 +54,7 @@ public class ServerSpawnBaseline extends Message {
         entity.setEvents(processEvents());
         entity.setSolid(processSolid());
 
-        setLength(offset - off);
+        setLength(offset - off + GARBAGE_LENGTH);
     }
 
 /*-------------------------------------------------------------------*/
