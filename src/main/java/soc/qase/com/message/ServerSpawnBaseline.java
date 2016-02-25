@@ -28,8 +28,8 @@ public class ServerSpawnBaseline extends Message {
     private byte[] data = null;
 
     private static float PI = (float) 3.1415926535;
-    //length of 00 00 00 80 3f 00 00 80 3f 00 00 80 3f 00 00 80 3f
-    private static final int GARBAGE_LENGTH = 17;
+
+    private static final String CMD_PATTERN = "cmd ";
 
 /*-------------------------------------------------------------------*/
 
@@ -37,24 +37,13 @@ public class ServerSpawnBaseline extends Message {
      *    @param data message source */
 /*-------------------------------------------------------------------*/
     public ServerSpawnBaseline(byte[] data, int off) {
-        offset = off;
-        this.data = data;
-        entity = new Entity();
-
-        bitmask = processBitmask();
-
-        entity.setNumber(processNumber());
-        entity.setActive(processActive());
-        entity.setModel(processModel());
-        entity.setEffects(processEffects());
-        entity.setOrigin(processOrigin());
-        entity.setAngles(processAngles());
-        entity.setOldOrigin(processOldOrigin());
-        entity.setSound(processSound());
-        entity.setEvents(processEvents());
-        entity.setSolid(processSolid());
-
-        setLength(offset - off + GARBAGE_LENGTH);
+        //I have no knowledge of Daikatana's baseline packet format, so I will only set a packet length :(
+        final int cmdIndex = Utils.byteArraySearch(data, CMD_PATTERN.getBytes());
+        if (cmdIndex > off) {
+            setLength(cmdIndex - 1 - off);
+        } else {
+            setLength(data.length - off);
+        }
     }
 
 /*-------------------------------------------------------------------*/

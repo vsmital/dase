@@ -180,8 +180,6 @@ public abstract class ServerMessageHandler extends Observable {
     protected void processServerSpawnBaseline(ServerSpawnBaseline message) {
         if (verbose)
             LOGGER.debug("Processing: ServerSpawnBaseline");
-
-        world.setEntity(message.getEntity(), true);
     }
 
     /*-------------------------------------------------------------------*/
