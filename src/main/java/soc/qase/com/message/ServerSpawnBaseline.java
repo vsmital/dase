@@ -30,6 +30,7 @@ public class ServerSpawnBaseline extends Message {
     private static float PI = (float) 3.1415926535;
 
     private static final String CMD_PATTERN = "cmd ";
+    private static final String PRECACHE_PATTERN = "precache";
 
 /*-------------------------------------------------------------------*/
 
@@ -38,7 +39,10 @@ public class ServerSpawnBaseline extends Message {
 /*-------------------------------------------------------------------*/
     public ServerSpawnBaseline(byte[] data, int off) {
         //I have no knowledge of Daikatana's baseline packet format, so I will only set a packet length :(
-        final int cmdIndex = Utils.byteArraySearch(data, CMD_PATTERN.getBytes());
+        int cmdIndex = Utils.byteArraySearch(data, PRECACHE_PATTERN.getBytes());
+        if (cmdIndex == -1) {
+            cmdIndex = Utils.byteArraySearch(data, CMD_PATTERN.getBytes());
+        }
         if (cmdIndex > off) {
             setLength(cmdIndex - 1 - off);
         } else {
