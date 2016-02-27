@@ -7,6 +7,6 @@ import soc.qase.info.*;
 import soc.qase.state.*;
 import soc.qase.bot.matlab.sample.*;
 import soc.qase.bot.matlab.general.*
-import soc.qase.file.dm2.*;
+import soc.qase.file.dem.*;
 
 % add any further imports here

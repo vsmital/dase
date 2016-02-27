@@ -9,7 +9,7 @@ import java.util.Vector;
 
 import soc.qase.ai.kmeans.KMeansCalc;
 import soc.qase.ai.kmeans.KMeansData;
-import soc.qase.file.dm2.DM2Parser;
+import soc.qase.file.dem.DemParser;
 import soc.qase.state.Entity;
 import soc.qase.state.World;
 import soc.qase.tools.vecmath.Vector3f;
@@ -28,7 +28,7 @@ import soc.qase.tools.vecmath.Vector3f;
  *	such. All the user need do to create a full navigation map, therefore, is
  *	record himself running around the given level, collecting any necessary
  *	items, and supply the DM2 file to the WaypointMapGenerator class.
- *    @see soc.qase.file.dm2.DM2Parser
+ *    @see DemParser
  *	@see soc.qase.ai.kmeans.KMeansCalc
  *	@see Waypoint
  *	@see WaypointItem
@@ -53,7 +53,7 @@ public class WaypointMapGenerator {
 
         World world = null;
         WaypointMap wpMap = new WaypointMap();
-        DM2Parser dm2p = new DM2Parser(dm2File);
+        DemParser dm2p = new DemParser(dm2File);
 
         Vector isAlive = new Vector();
         Vector playerPos = new Vector();

@@ -3,7 +3,7 @@
 // Author:			Bernard.Gorman@computing.dcu.ie
 //---------------------------------------------------------------------
 
-package soc.qase.file.dm2;
+package soc.qase.file.dem;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -29,7 +29,7 @@ import soc.qase.tools.Utils;
  *	as necessary, and saved to file when the agent disconnects from
  *	the server or as an intermediate step whenever the map is changed. */
 /*-------------------------------------------------------------------*/
-public class DM2Recorder {
+public class DemRecorder {
     protected File dm2File = null;
     protected String filename = null;
 
@@ -49,7 +49,7 @@ public class DM2Recorder {
     /**    Default constructor. Prepares the DM2Recorder to start saving the
      *	session. */
 /*-------------------------------------------------------------------*/
-    public DM2Recorder() {
+    public DemRecorder() {
         initRecorder();
     }
 
@@ -59,7 +59,7 @@ public class DM2Recorder {
      *	file.
      *    @param fName the filename under which to save the recording */
 /*-------------------------------------------------------------------*/
-    public DM2Recorder(String fName) {
+    public DemRecorder(String fName) {
         initRecorder();
         startRecording(fName);
     }

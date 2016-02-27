@@ -25,7 +25,7 @@ import soc.qase.com.packet.ConnectionlessPacket;
 import soc.qase.com.packet.Packet;
 import soc.qase.com.packet.Sequence;
 import soc.qase.com.packet.ServerPacket;
-import soc.qase.file.dm2.DM2Recorder;
+import soc.qase.file.dem.DemRecorder;
 import soc.qase.info.Config;
 import soc.qase.info.Server;
 import soc.qase.info.User;
@@ -70,7 +70,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
 
     // game information
     private boolean inGame = false;
-    private DM2Recorder dm2Recorder = null;
+    private DemRecorder demRecorder = null;
 
     private int currentCTFTeam = Integer.MIN_VALUE;
 
@@ -91,7 +91,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
 /*-------------------------------------------------------------------*/
     public Proxy() {
         allocateCID();
-        dm2Recorder = new DM2Recorder();
+        demRecorder = new DemRecorder();
     }
 
 /*-------------------------------------------------------------------*/
@@ -108,7 +108,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
         allocateCID();
         this.user = user;
         threadSafe = highThreadSafety;
-        dm2Recorder = new DM2Recorder();
+        demRecorder = new DemRecorder();
     }
 
 /*-------------------------------------------------------------------*/
@@ -129,7 +129,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
         this.user = user;
         trackInventory = trackInv;
         threadSafe = highThreadSafety;
-        dm2Recorder = new DM2Recorder();
+        demRecorder = new DemRecorder();
     }
 
 /*-------------------------------------------------------------------*/
@@ -205,7 +205,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      *	false. */
 /*-------------------------------------------------------------------*/
     public synchronized boolean connect(String host, int port, String recordDM2File) {
-        if (recordDM2File != null) dm2Recorder.startRecording(recordDM2File);
+        if (recordDM2File != null) demRecorder.startRecording(recordDM2File);
         return connect(host, port);
     }
 
@@ -228,8 +228,8 @@ public class Proxy extends ServerMessageHandler implements Runnable {
         ClientPacket packet = null;
         ClientCommand message = null;
 
-        if (dm2Recorder.isRecording() && stopRecording)
-            dm2Recorder.stopRecording();
+        if (demRecorder.isRecording() && stopRecording)
+            demRecorder.stopRecording();
 
         if (connected) {
             inGame = false;
@@ -309,7 +309,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      *	otherwise false */
 /*-------------------------------------------------------------------*/
     public boolean isRecording() {
-        return dm2Recorder.isRecording();
+        return demRecorder.isRecording();
     }
 
 /*-------------------------------------------------------------------*/
@@ -671,7 +671,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
             }
 
             reconnect = false;
-            dm2Recorder.newMap();
+            demRecorder.newMap();
 
             final boolean ctf = isCTFServer();
 
@@ -699,7 +699,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      *	This thread also passes the network stream to the DM2Recorder, if
      *	active, for saving to file.
      *    @see #setHighThreadSafety(boolean)
-     *	@see soc.qase.file.dm2.DM2Recorder */
+     *	@see DemRecorder */
 /*-------------------------------------------------------------------*/
     void processIncomingDataPacket(byte[] incomingData) {
         Packet packet = null;
@@ -709,10 +709,10 @@ public class Proxy extends ServerMessageHandler implements Runnable {
             packet = new ConnectionlessPacket(incomingData);
             processConnectionlessPacket((ConnectionlessPacket) packet);
         } else {
-            if (inGame && dm2Recorder.isRecording())
-                dm2Recorder.addData(incomingData);
-            else if (!inGame && dm2Recorder.isRecording())
-                dm2Recorder.addHeader(incomingData);
+            if (inGame && demRecorder.isRecording())
+                demRecorder.addData(incomingData);
+            else if (!inGame && demRecorder.isRecording())
+                demRecorder.addHeader(incomingData);
 
             if (incomingData != null) {
                 int dataIndex = 8;

@@ -3,7 +3,7 @@
 // Author:			Bernard.Gorman@computing.dcu.ie
 //---------------------------------------------------------------------
 
-package soc.qase.file.dm2;
+package soc.qase.file.dem;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +33,7 @@ import soc.qase.tools.Utils;
  *	frame, and the programmer may query it to retrieve whatever
  *	information (s)he requires. */
 /*-------------------------------------------------------------------*/
-public class DM2Parser extends ServerMessageHandler {
+public class DemParser extends ServerMessageHandler {
     private byte[] blockLength = null;
     private byte[] incomingData = null;
 
@@ -54,7 +54,7 @@ public class DM2Parser extends ServerMessageHandler {
 
     /**    Default constructor. Prepares the DM2Parser for file loading. */
 /*-------------------------------------------------------------------*/
-    public DM2Parser() {
+    public DemParser() {
         world = new World(true);
         blockLength = new byte[4];
     }
@@ -63,7 +63,7 @@ public class DM2Parser extends ServerMessageHandler {
 
     /**    Constructor. Instantiates the DM2Parser and loads the specified file. */
 /*-------------------------------------------------------------------*/
-    public DM2Parser(String filename) {
+    public DemParser(String filename) {
         world = new World(true);
         blockLength = new byte[4];
 

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import soc.qase.com.packet.ClientPacket;
 import soc.qase.com.packet.ServerPacket;
+import soc.qase.file.dem.DemParser;
 import soc.qase.info.Server;
 import soc.qase.state.World;
 
@@ -20,7 +21,7 @@ import soc.qase.state.World;
 /**    Abstract class used as base for all classes which read and process
  *	server messages (ie Proxy and DM2Parser).
  *    @see soc.qase.com.Proxy
- *	@see soc.qase.file.dm2.DM2Parser */
+ *	@see DemParser */
 /*-------------------------------------------------------------------*/
 public abstract class ServerMessageHandler extends Observable {
 
