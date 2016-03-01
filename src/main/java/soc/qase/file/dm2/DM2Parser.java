@@ -147,7 +147,8 @@ public class DM2Parser extends ServerMessageHandler {
             int dataIndex = 0;
 
             while (dataIndex != incomingData.length) {
-                ServerPacket packet = new ServerPacket(incomingData, dataIndex);
+                //TODO vsmital 1.3.2016 fix setting of 3-rd parameter in nex ServerPacket constructor
+                ServerPacket packet = new ServerPacket(incomingData, dataIndex, false);
                 processServerPacket(packet);
 
                 dataIndex += packet.getLength();

@@ -19,6 +19,9 @@ public class Message {
     private byte[] data = null;
     private int length = 0;
 
+    // this weird delimiter is primarily used in server spawn baseline message where it delimits messsages in block from each other
+    protected static final byte[] MESSAGES_INNER_DELIMITER = new byte[]{ 0, 0, -128, 63 };
+
 /*-------------------------------------------------------------------*/
 
     /**    Default constructor. */

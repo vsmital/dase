@@ -6,6 +6,7 @@
 
 package soc.qase.com.packet;
 
+import org.apache.commons.lang.ArrayUtils;
 import soc.qase.com.message.Message;
 import soc.qase.com.message.ServerBad;
 import soc.qase.com.message.ServerCenterPrint;
@@ -36,43 +37,90 @@ import soc.qase.com.message.ServerTemporaryEntity;
 public class ServerPacket extends Packet {
 /*-------------------------------------------------------------------*/
 
+    private static final int SERVER_BAD_MESSAGE_TYPE = 0;
+    private static final int SERVER_STUFF_TEXT_MESSAGE_TYPE = 19;
+    private static final int SERVER_SPAWN_BASELINE_MESSAGE_TYPE = 22;
+
+    private boolean serverBaselineProcessing;
+    private int offset;
+
     /**    Constructor. Detect data type and create appropriate Message object.
-     *    @param data source message data */
+     *    @param data source message data
+     *    @param off offset regarding input data byte array
+     *    @param inServerBaselineProcessing determines if we're in the middle of server spawn baseline processing
+     */
 /*-------------------------------------------------------------------*/
-    public ServerPacket(byte[] data, int off) {
+    public ServerPacket(byte[] data, int off, boolean inServerBaselineProcessing) {
         int messageType = 0;
+        offset = off;
         Message message = null;
 
-        messageType = (int) data[off];
+        if (inServerBaselineProcessing) {
+            messageType = findMessageTypeAndUpdateOffset(data, off);
+            serverBaselineProcessing = true;
+        } else {
+            messageType = (int) data[off];
+            if (messageType == SERVER_SPAWN_BASELINE_MESSAGE_TYPE) {
+                serverBaselineProcessing = true;
+            }
+        }
 
-        if (messageType == 0) message = new ServerBad(data, off + 1);
-        else if (messageType == 9) message = new ServerPlayerMuzzleFlash(data, off + 1);
-        else if (messageType == 10) message = new ServerMonsterMuzzleFlash(data, off + 1);
-        else if (messageType == 11) message = new ServerTemporaryEntity(data, off + 1);
-        else if (messageType == 12) message = new ServerLayout(data, off + 1);
-        else if (messageType == 13) message = new ServerInventory(data, off + 1);
+        if (messageType == SERVER_BAD_MESSAGE_TYPE) message = new ServerBad(data, offset + 1);
+        else if (messageType == 9) message = new ServerPlayerMuzzleFlash(data, offset + 1);
+        else if (messageType == 10) message = new ServerMonsterMuzzleFlash(data, offset + 1);
+        else if (messageType == 11) message = new ServerTemporaryEntity(data, offset + 1);
+        else if (messageType == 12) message = new ServerLayout(data, offset + 1);
+        else if (messageType == 13) message = new ServerInventory(data, offset + 1);
         else if (messageType == 14) message = new ServerNop();
         else if (messageType == 15) message = new ServerDisconnect();
         else if (messageType == 16) message = new ServerReconnect();
-        else if (messageType == 17) message = new ServerSound(data, off + 1);
-        else if (messageType == 18) message = new ServerPrint(data, off + 1);
-        else if (messageType == 19) message = new ServerStuffText(data, off); //originally messageType == 11
-        else if (messageType == 20) message = new ServerData(data, off + 1); //originally messageType == 12
-        else if (messageType == 21) message = new ServerConfigString(data, off + 1); // 13
-        else if (messageType == 22) message = new ServerSpawnBaseline(data, off + 1); // 14
-        else if (messageType == 23) message = new ServerCenterPrint(data, off + 1); //15
-        else if (messageType == 24) message = new ServerDownload(data, off + 1); //16
-        else if (messageType == 25) message = new ServerPlayerInfo(data, off + 1); //17
-        else if (messageType == 26) message = new ServerPacketEntities(data, off + 1); //18
-        else if (messageType == 27) message = new ServerDeltaPacketEntities(data, off + 1); //19
-        else if (messageType == 28) message = new ServerFrame(data, off + 1); //20
+        else if (messageType == 17) message = new ServerSound(data, offset + 1);
+        else if (messageType == 18) message = new ServerPrint(data, offset + 1);
+        else if (messageType == 19) message = new ServerStuffText(data, offset); //originally messageType == 11
+        else if (messageType == 20) message = new ServerData(data, offset + 1); //originally messageType == 12
+        else if (messageType == 21) message = new ServerConfigString(data, offset + 1); // 13
+        else if (messageType == 22) message = new ServerSpawnBaseline(data, offset + 1); // 14
+        else if (messageType == 23) message = new ServerCenterPrint(data, offset + 1); //15
+        else if (messageType == 24) message = new ServerDownload(data, offset + 1); //16
+        else if (messageType == 25) message = new ServerPlayerInfo(data, offset + 1); //17
+        else if (messageType == 26) message = new ServerPacketEntities(data, offset + 1); //18
+        else if (messageType == 27) message = new ServerDeltaPacketEntities(data, offset + 1); //19
+        else if (messageType == 28) message = new ServerFrame(data, offset + 1); //20
         else if (messageType > 28) {
-            messageType = 0;
-            message = new ServerBad(data, off + 1);
+            messageType = SERVER_BAD_MESSAGE_TYPE;
+            message = new ServerBad(data, offset + 1);
         }
 
         setMessage(message);
         setLength(1 + message.getLength());
+    }
+
+    public boolean isInServerBaselineProcessing() {
+        return serverBaselineProcessing;
+    }
+
+    private Integer findMessageTypeAndUpdateOffset(byte[] data, int off) {
+        final int serverStuffTextIndex = ArrayUtils.indexOf(data, (byte) SERVER_STUFF_TEXT_MESSAGE_TYPE, off);
+        final int serverBaselineIndex = ArrayUtils.indexOf(data, (byte) SERVER_SPAWN_BASELINE_MESSAGE_TYPE, off);
+
+        if (serverStuffTextIndex == -1 && serverBaselineIndex == -1) {
+            return SERVER_BAD_MESSAGE_TYPE;
+        } else if (serverStuffTextIndex == -1) {
+            offset = serverBaselineIndex;
+            return SERVER_SPAWN_BASELINE_MESSAGE_TYPE;
+        } else if (serverBaselineIndex == -1) {
+            offset = serverStuffTextIndex;
+            return SERVER_STUFF_TEXT_MESSAGE_TYPE;
+        } else {
+            if (serverStuffTextIndex < serverBaselineIndex) {
+                offset = serverStuffTextIndex;
+                return SERVER_STUFF_TEXT_MESSAGE_TYPE;
+            } else {
+                offset = serverBaselineIndex;
+                return SERVER_SPAWN_BASELINE_MESSAGE_TYPE;
+            }
+        }
+
     }
 }
 

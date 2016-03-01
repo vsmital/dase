@@ -717,11 +717,14 @@ public class Proxy extends ServerMessageHandler implements Runnable {
             if (incomingData != null) {
                 int dataIndex = 8;
 
+                int messagesCounter = 0;
+
                 while (dataIndex != incomingData.length) {
-                    packet = new ServerPacket(incomingData, dataIndex);
+                    packet = new ServerPacket(incomingData, dataIndex, messagesCounter == 0 ? false : ((ServerPacket) packet).isInServerBaselineProcessing());
                     processServerPacket((ServerPacket) packet);
 
                     dataIndex += packet.getLength();
+                    messagesCounter++;
                 }
             }
         }

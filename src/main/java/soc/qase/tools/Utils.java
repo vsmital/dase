@@ -271,6 +271,22 @@ public class Utils {
         return -1;
     }
 
+    /**    Search for a given subsequence of bytes in a larger byte array from position determined by offset parameter.
+     *    @param data source
+     *	@param searchData byte search 'string'
+     *  @param startIndex index in data array from which should be search done
+     *	@return the index in the large array at which the smaller byte
+     *	sequence begins */
+/*-------------------------------------------------------------------*/
+    public static int byteArraySearch(byte[] data, byte[] searchData, int startIndex) {
+        for (int i = startIndex; i <= data.length - searchData.length; i++) {
+            if (data[i] == searchData[0] && Arrays.equals(searchData, extractBytes(data, i, searchData.length)))
+                return i;
+        }
+
+        return -1;
+    }
+
 /*-------------------------------------------------------------------*/
 
     /**    Extract a subsequence of bytes from a larger array.

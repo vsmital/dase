@@ -38,13 +38,18 @@ public class ServerSpawnBaseline extends Message {
      *    @param data message source */
 /*-------------------------------------------------------------------*/
     public ServerSpawnBaseline(byte[] data, int off) {
-        //I have no knowledge of Daikatana's baseline packet format, so I will only set a packet length :(
-        int cmdIndex = Utils.byteArraySearch(data, PRECACHE_PATTERN.getBytes());
-        if (cmdIndex == -1) {
-            cmdIndex = Utils.byteArraySearch(data, CMD_PATTERN.getBytes());
-        }
-        if (cmdIndex > off) {
-            setLength(cmdIndex - 1 - off);
+        int delimiterIndex1 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, off + 1);
+        if (delimiterIndex1 != -1) {
+            while (true) {
+                int delimiterIndex2 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, delimiterIndex1 + 4);
+                if (delimiterIndex2 == -1 || delimiterIndex2 > delimiterIndex1 + 4) {
+                    break;
+                }
+
+                delimiterIndex1 = delimiterIndex2;
+            }
+
+            setLength(delimiterIndex1 + MESSAGES_INNER_DELIMITER.length - off);
         } else {
             setLength(data.length - off);
         }

@@ -145,7 +145,8 @@ public class DM2Recorder {
             int dataIndex = 8;
 
             while (dataIndex != incomingData.length) {
-                ServerPacket sPacket = new ServerPacket(incomingData, dataIndex);
+                //TODO vsmital 1.3.2016 fix setting of 3-rd parameter in nex ServerPacket constructor
+                ServerPacket sPacket = new ServerPacket(incomingData, dataIndex, false);
                 Message msg = sPacket.getMessage();
 
                 if (msg instanceof ServerStuffText) {

@@ -19,7 +19,9 @@ public class ServerStuffText extends Message {
 /*-------------------------------------------------------------------*/
 
     /**    Constructor. Parses the data and extracts message details.
-     *    @param data message source */
+     *    @param data message source
+     *    @param off offset regarding input data byte array
+     */
 /*-------------------------------------------------------------------*/
     public ServerStuffText(byte[] data, int off) {
         int stringLength = Utils.stringLength(data, off + 1);
