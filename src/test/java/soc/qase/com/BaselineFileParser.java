@@ -60,7 +60,8 @@ public class BaselineFileParser {
             return;
         }
 
-        final String bitMask = lineSubParts[1].substring(3, 15);
+        int packetTypeIndex = lineSubParts[1].indexOf("16");
+        final String bitMask = lineSubParts[1].substring(packetTypeIndex, packetTypeIndex + 15);
         final int packetLength = lineSubParts[1].replaceAll(" ", "").substring(lineSubParts[1].indexOf("16")).length();
         if (baselineMapping.containsKey(bitMask)) {
             if (lengthAlreadyDefined(baselineMapping.get(bitMask), packetLength)) {
