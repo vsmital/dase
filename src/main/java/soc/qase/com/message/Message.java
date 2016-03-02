@@ -6,6 +6,8 @@
 
 package soc.qase.com.message;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import soc.qase.tools.Utils;
 
 /*-------------------------------------------------------------------*/
@@ -21,6 +23,8 @@ public class Message {
 
     // this weird delimiter is primarily used in server spawn baseline message where it delimits messsages in block from each other
     protected static final byte[] MESSAGES_INNER_DELIMITER = new byte[]{ 0, 0, -128, 63 };
+
+    protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 /*-------------------------------------------------------------------*/
 

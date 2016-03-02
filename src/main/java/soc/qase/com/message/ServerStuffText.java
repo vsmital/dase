@@ -6,6 +6,7 @@
 
 package soc.qase.com.message;
 
+import com.google.common.io.BaseEncoding;
 import soc.qase.tools.Utils;
 
 /*-------------------------------------------------------------------*/
@@ -27,6 +28,9 @@ public class ServerStuffText extends Message {
         int stringLength = Utils.stringLength(data, off + 1);
         stuffString = new String(Utils.stringValue(data, off + 1, stringLength - 1));
         setLength(stringLength + 1);
+        String characterInterpretation = "13" + BaseEncoding.base16().encode(Utils.extractBytes(data, off, getLength())).toLowerCase();
+        characterInterpretation = characterInterpretation.replaceAll("..", "$0 ");
+        LOGGER.debug(characterInterpretation);
     }
 
 /*-------------------------------------------------------------------*/
