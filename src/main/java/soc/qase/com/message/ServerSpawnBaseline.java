@@ -6,7 +6,6 @@
 
 package soc.qase.com.message;
 
-import com.google.common.io.BaseEncoding;
 import soc.qase.state.Angles;
 import soc.qase.state.Effects;
 import soc.qase.state.Entity;
@@ -23,15 +22,14 @@ import soc.qase.tools.Utils;
  *	from host to client. */
 /*-------------------------------------------------------------------*/
 public class ServerSpawnBaseline extends Message {
+    private static final int TYPE = 22;
+    private static final float PI = (float) 3.1415926535;
+
+
     private Entity entity = null;
     private int offset = 0;
     private int bitmask = 0;
     private byte[] data = null;
-
-    private static float PI = (float) 3.1415926535;
-
-    private static final String CMD_PATTERN = "cmd ";
-    private static final String PRECACHE_PATTERN = "precache";
 
 /*-------------------------------------------------------------------*/
 
@@ -39,25 +37,16 @@ public class ServerSpawnBaseline extends Message {
      *    @param data message source */
 /*-------------------------------------------------------------------*/
     public ServerSpawnBaseline(byte[] data, int off) {
-        int delimiterIndex1 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, off + 1);
-        if (delimiterIndex1 != -1) {
-            while (true) {
-                int delimiterIndex2 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, delimiterIndex1 + 4);
-                if (delimiterIndex2 == -1 || delimiterIndex2 > delimiterIndex1 + 4) {
-                    break;
-                }
+        super(TYPE);
 
-                delimiterIndex1 = delimiterIndex2;
-            }
+        offset = off;
+        this.data = data;
+        entity = new Entity();
 
-            setLength(delimiterIndex1 + MESSAGES_INNER_DELIMITER.length - off);
-        } else {
-            setLength(data.length - off);
-        }
+        setLength(getLength(data, off));
+        logHexStringInterpretation(data, off);
 
-        String characterInterpretation = "16" + BaseEncoding.base16().encode(Utils.extractBytes(data, off, getLength())).toLowerCase();
-        characterInterpretation = characterInterpretation.replaceAll("..", "$0 ");
-        LOGGER.debug(characterInterpretation);
+        processData();
     }
 
 /*-------------------------------------------------------------------*/
@@ -71,6 +60,40 @@ public class ServerSpawnBaseline extends Message {
 
     /*-------------------------------------------------------------------*/
 /*-------------------------------------------------------------------*/
+    private int getLength(byte[] data, int off) {
+        int delimiterIndex1 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, off + 1);
+        if (delimiterIndex1 != -1) {
+            while (true) {
+                int delimiterIndex2 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, delimiterIndex1 + 4);
+                if (delimiterIndex2 == -1 || delimiterIndex2 > delimiterIndex1 + 4) {
+                    break;
+                }
+
+                delimiterIndex1 = delimiterIndex2;
+            }
+
+            return delimiterIndex1 + MESSAGES_INNER_DELIMITER.length - off;
+        } else {
+            return data.length - off;
+        }
+    }
+
+    private void processData() {
+        bitmask = processBitmask();
+
+        entity.setNumber(processNumber());
+        entity.setActive(processActive());
+        entity.setModel(processModel());
+        entity.setEffects(processEffects());
+        entity.setOrigin(processOrigin());
+        entity.setAngles(processAngles());
+        entity.setOldOrigin(processOldOrigin());
+        entity.setSound(processSound());
+        entity.setEvents(processEvents());
+        entity.setSolid(processSolid());
+    }
+
+
     private int processBitmask() {
         int result = 0;
 

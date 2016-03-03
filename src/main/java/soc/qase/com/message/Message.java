@@ -6,6 +6,7 @@
 
 package soc.qase.com.message;
 
+import com.google.common.io.BaseEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import soc.qase.tools.Utils;
@@ -16,13 +17,13 @@ import soc.qase.tools.Utils;
  *	messages sent between client/host and host/client. */
 /*-------------------------------------------------------------------*/
 public class Message {
+    // this weird delimiter is primarily used in server spawn baseline message where it delimits messages in block from each other
+    protected static final byte[] MESSAGES_INNER_DELIMITER = new byte[]{ 0, 0, -128, 63 };
+
     private int type = -1;
     private int clientID = -1;
     private byte[] data = null;
     private int length = 0;
-
-    // this weird delimiter is primarily used in server spawn baseline message where it delimits messsages in block from each other
-    protected static final byte[] MESSAGES_INNER_DELIMITER = new byte[]{ 0, 0, -128, 63 };
 
     protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -31,6 +32,10 @@ public class Message {
     /**    Default constructor. */
 /*-------------------------------------------------------------------*/
     public Message() {
+    }
+
+    public Message(int type) {
+        this.type = type;
     }
 
 /*-------------------------------------------------------------------*/
@@ -151,6 +156,12 @@ public class Message {
         }
 
         return result;
+    }
+
+    protected void logHexStringInterpretation(byte[] data, int offset) {
+        String characterInterpretation = getType() + BaseEncoding.base16().encode(Utils.extractBytes(data, offset, getLength())).toLowerCase();
+        characterInterpretation = characterInterpretation.replaceAll("..", "$0 ");
+        LOGGER.debug(characterInterpretation);
     }
 }
 

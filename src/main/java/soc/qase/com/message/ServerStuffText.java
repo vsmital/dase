@@ -6,7 +6,6 @@
 
 package soc.qase.com.message;
 
-import com.google.common.io.BaseEncoding;
 import soc.qase.tools.Utils;
 
 /*-------------------------------------------------------------------*/
@@ -15,6 +14,8 @@ import soc.qase.tools.Utils;
  *	host to client. */
 /*-------------------------------------------------------------------*/
 public class ServerStuffText extends Message {
+    private static final int TYPE = 22;
+
     private String stuffString = null;
 
 /*-------------------------------------------------------------------*/
@@ -25,12 +26,13 @@ public class ServerStuffText extends Message {
      */
 /*-------------------------------------------------------------------*/
     public ServerStuffText(byte[] data, int off) {
-        int stringLength = Utils.stringLength(data, off + 1);
-        stuffString = new String(Utils.stringValue(data, off + 1, stringLength - 1));
-        setLength(stringLength + 1);
-        String characterInterpretation = "13" + BaseEncoding.base16().encode(Utils.extractBytes(data, off, getLength())).toLowerCase();
-        characterInterpretation = characterInterpretation.replaceAll("..", "$0 ");
-        LOGGER.debug(characterInterpretation);
+        super(TYPE);
+
+        int stringLength = Utils.stringLength(data, off);
+        stuffString = new String(Utils.stringValue(data, off, stringLength - 1));
+        setLength(data.length - off);
+
+        logHexStringInterpretation(data, off);
     }
 
 /*-------------------------------------------------------------------*/
