@@ -354,8 +354,7 @@ public class DM2Parser extends ServerMessageHandler {
      *    @param message the ServerReconnect message */
 /*-------------------------------------------------------------------*/
     protected void processServerReconnect(ServerReconnect message) {
-        if (verbose)
-            System.out.println("Processing: ServerReconnect");
+        LOGGER.debug("Processing: ServerReconnect");
 
         server = null;
         world = new World(true);

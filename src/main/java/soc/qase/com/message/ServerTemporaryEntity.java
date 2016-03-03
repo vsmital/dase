@@ -200,7 +200,7 @@ public class ServerTemporaryEntity extends Message {
     /*-------------------------------------------------------------------*/
 /*-------------------------------------------------------------------*/
     private void processBadEntity() {
-        System.out.println("Bad Temporary Entity Received.");
+        LOGGER.debug("Bad Temporary Entity Received.");
     }
 
     /*-------------------------------------------------------------------*/

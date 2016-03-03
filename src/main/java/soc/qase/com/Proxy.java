@@ -526,8 +526,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      */
 /*-------------------------------------------------------------------*/
     protected void processServerDisconnect(ServerDisconnect message) {
-        if (verbose)
-            System.out.println("Processing: ServerDisconnect");
+        LOGGER.debug("Processing: ServerDisconnect");
 
         disconnect();
     }
@@ -540,8 +539,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      */
 /*-------------------------------------------------------------------*/
     protected void processServerReconnect(ServerReconnect message) {
-        if (verbose)
-            System.out.println("Processing: ServerReconnect");
+        LOGGER.debug("Processing: ServerReconnect");
 
         disconnect(false);
         reconnect = true;
@@ -555,8 +553,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
      */
 /*-------------------------------------------------------------------*/
     protected void processServerStuffText(ServerStuffText message) {
-        if (verbose)
-            System.out.println("Processing: ServerStuffText");
+        LOGGER.debug("Processing: ServerStuffText");
 
         StringTokenizer st = null;
         String currentToken = null;
