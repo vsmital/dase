@@ -24,6 +24,10 @@
         </rollingPolicy>
     </appender>
 
+	<logger name="soc.qase" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT"/>
+	</logger>
+
 	<logger name="soc.qase.com.message" level="DEBUG" additivity="false">
             <appender-ref ref="FILE"/>
 	</logger>
