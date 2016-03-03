@@ -103,17 +103,23 @@ public class ServerPacket extends Packet {
     }
 
     private int findMessageTypeAndUpdateOffset(byte[] data) {
-        final int serverStuffTextIndex = ArrayUtils.indexOf(data, (byte) 19, offset);
-        final int serverBaselineIndex = ArrayUtils.indexOf(data, (byte) 22, offset);
-
-        if (serverBaselineIndex != -1) {
-            offset = serverBaselineIndex;
-            return 22;
-        } else if (serverStuffTextIndex != -1 && (serverBaselineIndex == -1 || serverStuffTextIndex < serverBaselineIndex)) {
-            offset = serverStuffTextIndex;
+        if (data[offset] == 19) {
             return 19;
+        } else if (data[offset] == 22) {
+            return 22;
         } else {
-            return 0;
+            final int serverStuffTextIndex = ArrayUtils.indexOf(data, (byte) 19, offset);
+            final int serverBaselineIndex = ArrayUtils.indexOf(data, (byte) 22, offset);
+
+            if (serverBaselineIndex != -1) {
+                offset = serverBaselineIndex;
+                return 22;
+            } else if (serverStuffTextIndex != -1 && (serverBaselineIndex == -1 || serverStuffTextIndex < serverBaselineIndex)) {
+                offset = serverStuffTextIndex;
+                return 19;
+            } else {
+                return 0;
+            }
         }
     }
 }
