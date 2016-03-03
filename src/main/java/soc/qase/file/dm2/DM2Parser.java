@@ -221,12 +221,10 @@ public class DM2Parser extends ServerMessageHandler {
         // if skipping to the specified gamestate fails
         int oldMapNum = mapNumber;
         int oldWorldNum = worldNumber;
-        boolean tempVerbose = verbose;
 
 // --------------------------------------------------------------
 
         reset();
-        verbose = false;
 
         do    // attempt to skip to the specified gamestate
         {
@@ -235,8 +233,6 @@ public class DM2Parser extends ServerMessageHandler {
         while (world != null && (mapNumber != mapNum || worldNumber != worldNum));
 
 // --------------------------------------------------------------
-
-        verbose = tempVerbose;
 
         // if the user tried to skip to a non-existent
         // index, reset to the previous position
@@ -264,12 +260,10 @@ public class DM2Parser extends ServerMessageHandler {
         // save the current state of various params for quick-reset
         int oldMapNum = mapNumber;
         int oldWorldNum = worldNumber;
-        boolean tempVerbose = verbose;
 
 // --------------------------------------------------------------
 
         reset();
-        verbose = false;
 
         int curWorldNum = -1;
 
@@ -304,7 +298,6 @@ public class DM2Parser extends ServerMessageHandler {
 // --------------------------------------------------------------
 
         // reset to the position before the method was called
-        verbose = tempVerbose;
         goToWorld(oldMapNum, oldWorldNum);
 
         return mapWorldInfo;
