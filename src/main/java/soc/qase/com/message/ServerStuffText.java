@@ -14,7 +14,7 @@ import soc.qase.tools.Utils;
  *	host to client. */
 /*-------------------------------------------------------------------*/
 public class ServerStuffText extends Message {
-    private static final int TYPE = 22;
+    private static final int TYPE = 19;
 
     private String stuffString = null;
 
