@@ -737,5 +737,10 @@ public class Proxy extends ServerMessageHandler implements Runnable {
     User getUser() {
         return user;
     }
+
+    public void setCommunicator(final CommunicationHandler communicator) {
+        this.communicator = communicator;
+    }
+
 }
 
