@@ -159,7 +159,8 @@ public class Message {
     }
 
     protected void logHexStringInterpretation(byte[] data, int offset) {
-        String characterInterpretation = getType() + BaseEncoding.base16().encode(Utils.extractBytes(data, offset, getLength())).toLowerCase();
+        String characterInterpretation = String.format("%02X", getType()) + BaseEncoding.base16().encode(Utils.extractBytes(data, offset, getLength()))
+                .toLowerCase();
         characterInterpretation = characterInterpretation.replaceAll("..", "$0 ");
         LOGGER.debug(characterInterpretation);
     }
