@@ -16,7 +16,7 @@ import soc.qase.info.User;
 public class ProxyTest extends TestCase {
 
     @Mock
-    private CommunicationHandler communicationHandler;
+    private CommunicationHandler communicator;
 
     @InjectMocks
     private Proxy proxy;
@@ -93,6 +93,7 @@ public class ProxyTest extends TestCase {
         proxy.processIncomingDataPacket(hexStringToByteArray(hexString));
     }
 
+    @Ignore
     @Test
     public void testProcessIncomingDataPacket_serverSpawnBaseline4() {
         final String hexString
@@ -127,6 +128,12 @@ public class ProxyTest extends TestCase {
     @Test
     public void testProcessIncomingPacket_serverDownload() {
         final String hexString = "190000801900000018ffff00";
+        proxy.processIncomingDataPacket(hexStringToByteArray(hexString));
+    }
+
+    @Test
+    public void testProcessIncomingPacket_serverFrame() {
+        final String hexString = "2b000000250000001c7225000071250000000102190000000000001a0000";
         proxy.processIncomingDataPacket(hexStringToByteArray(hexString));
     }
 
