@@ -1,4 +1,4 @@
-package soc.qase.file.dm2;
+package soc.qase.file.dem;
 
 import junit.framework.TestCase;
 import org.junit.Ignore;
@@ -11,12 +11,12 @@ import soc.qase.state.World;
  * Created by Vojtech.Smital on 16.2.2016.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class DM2ParserTest extends TestCase {
+public class DemParserTest extends TestCase {
 
     @Ignore
     @Test
     public void testGetNextWorld() {
-        final DM2Parser parser = new DM2Parser("c:\\Users\\smital\\DAI_TOOLS\\test2.dem");
+        final DemParser parser = new DemParser("c:\\Users\\smital\\DAI_TOOLS\\test2.dem");
         World world = null;
 
         world = parser.getNextWorld();

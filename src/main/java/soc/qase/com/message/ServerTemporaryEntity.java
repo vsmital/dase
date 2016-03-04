@@ -17,7 +17,7 @@ import soc.qase.tools.vecmath.Vector3f;
 
 /**    Wrapper for temporary entity messages - a projectile, blood, weapon trails,
  *	etc. Temporary entity events are for things that happen at a location
- *	seperate from existing entity. Temporary entity messages are explicitly
+ *	separate from existing entity. Temporary entity messages are explicitly
  *	constructed and broadcast. */
 /*-------------------------------------------------------------------*/
 public class ServerTemporaryEntity extends Message {
