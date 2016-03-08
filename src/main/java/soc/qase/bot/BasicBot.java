@@ -65,7 +65,7 @@ public abstract class BasicBot extends Thread implements Bot {
     protected boolean ctfTeamAssigned = false;
 
     private boolean mapNotFound = false;
-    private static String q2HomeDir = null;
+    private static String daikatanaHomeDir = null;
 
     protected WaypointMap wpMap = null;
     protected BSPParser bsp = new BSPParser();
@@ -74,6 +74,10 @@ public abstract class BasicBot extends Thread implements Bot {
     private boolean globalAngles = true;
     private static final Vector3f BOUNDING_MAX = new Vector3f(9, 25, 9);
     private static final Vector3f BOUNDING_MIN = new Vector3f(-9, -25, -9);
+    private static final String DAIKATANA_HOME_KEY = "DAIKATANA_HOME";
+    private static final String DEFAULT_DAIKATANA_HOME_PATH = "c:/daikatana13";
+    //TODO vsmital 8.3.2016 16:16 find value for gameDir for Daikatana case
+    private static final String DATA_GAME_DIR = "data";
 
 /*-------------------------------------------------------------------*/
 
@@ -790,7 +794,7 @@ public abstract class BasicBot extends Thread implements Bot {
 /*-------------------------------------------------------------------*/
 
     /**    Instruct the agent to use a global or local co-ordinate system. In
-     *	Quake 2, the agent operates using a set of local axes that are rotated
+     *	Daikatana, the agent operates using a set of local axes that are rotated
      *	relative to the global co-ordinate system depending on the player's
      *	orientation when spawning. Generally, programmers are advised to work
      *	in global co-ordinates (the default setting), but may occasionally need
@@ -1961,45 +1965,45 @@ public abstract class BasicBot extends Thread implements Bot {
 
 /*-------------------------------------------------------------------*/
 
-    /**    Set the Quake 2 home directory. Used when locating the local BSP files
+    /**    Set the Daikatana home directory. Used when locating the local BSP files
      *	containing the game geometry. Two alternatives to calling this method
      *	exist; the user can pass the folder location to the JVM as a variable
-     *	called QUAKE2 using the -D switch (eg 'java -DQUAKE2="C:/quake2"'), or
-     *	- the preferred approach - an environment variable called 'QUAKE2' can
+     *	called Daikatana using the -D switch (eg 'java -DDAIKATANA_HOME="C:/daikatana"'), or
+     *	- the preferred approach - an environment variable called 'DAIKATANA_HOME' can
      *	be declared which points to the home folder.
-     *    @param q2hd the location of the Quake 2 home folder */
+     *    @param daikatanahd the location of the Daikatana home folder */
 /*-------------------------------------------------------------------*/
-    public static void setQuake2HomeDirectory(String q2hd) {
-        q2HomeDir = q2hd;
+    public static void setDaikatanaHomeDirectory(String daikatanahd) {
+        daikatanaHomeDir = daikatanahd;
     }
 
 /*-------------------------------------------------------------------*/
 
-    /**    Return the Quake 2 home folder location.
-     *    @return the location of the Quake 2 home folder */
+    /**    Return the Daikatana home folder location.
+     *    @return the location of the Daikatana home folder */
 /*-------------------------------------------------------------------*/
-    public static String getQuake2HomeDirectory() {
-        return q2HomeDir;
+    public static String getDaikatanaHomeDirectory() {
+        return daikatanaHomeDir;
     }
 
 /*-------------------------------------------------------------------*/
 
     /**    Read a local geometry file into memory. The path to the BSP file can
-     *	begin with the alias 'Q2HOME' (eg 'Q2HOME/maps/bsp1.bsp') which will
-     *	automatically be resolved to the actual Quake 2 home folder using
-     *	findQuake2HomeDirectory. If the correct BSP file is know before the
+     *	begin with the alias 'DAIKATANA_HOME' (eg 'DAIKATANA_HOME/maps/bsp1.bsp') which will
+     *	automatically be resolved to the actual Daikatana home folder using
+     *	findDaikatanaHomeDirectory. If the correct BSP file is know before the
      *	agent connects to the server, this method can be used to pre-load it.
      *    @param filename the location of the BSP file
      *	@return true if the file was successfully read, false otherwise
-     *	@see #setQuake2HomeDirectory
-     *	@see #findQuake2HomeDirectory */
+     *	@see #setDaikatanaHomeDirectory
+     *	@see #findDaikatanaHomeDirectory */
 /*-------------------------------------------------------------------*/
     protected boolean readMap(String filename) {
-        if (filename.substring(0, 6).equalsIgnoreCase("Q2HOME")) {
-            if (q2HomeDir == null)
-                findQuake2HomeDirectory();
+        if (filename.substring(0, 6).equalsIgnoreCase(DAIKATANA_HOME_KEY)) {
+            if (daikatanaHomeDir == null)
+                findDaikatanaHomeDirectory();
 
-            filename = q2HomeDir + filename.substring(6);
+            filename = daikatanaHomeDir + filename.substring(6);
         }
 
         return bsp.load(filename);
@@ -2026,15 +2030,15 @@ public abstract class BasicBot extends Thread implements Bot {
             String mapName = proxy.getServer().getMapName();
 
             if (gameDir == null || gameDir.length() == 0)
-                gameDir = "baseq2";
+                gameDir = DATA_GAME_DIR;
 
-            if (q2HomeDir == null || q2HomeDir.length() == 0)
-                findQuake2HomeDirectory();
+            if (daikatanaHomeDir == null || daikatanaHomeDir.length() == 0)
+                findDaikatanaHomeDirectory();
 
             // try to load BSP assuming filename == mapName
-            if (!bsp.load(q2HomeDir + "/" + gameDir + "/maps/" + mapName + ".bsp")) {
+            if (!bsp.load(daikatanaHomeDir + "/" + gameDir + "/maps/" + mapName + ".bsp")) {
                 String pakBSPFilename = null;
-                String pakDir = q2HomeDir + "/" + gameDir + "/";
+                String pakDir = daikatanaHomeDir + "/" + gameDir + "/";
 
                 // search PAKs assuming filename == mapName
                 for (int i = 0; i < 10; i++) {
@@ -2049,13 +2053,13 @@ public abstract class BasicBot extends Thread implements Bot {
 
             // search in BSP files for map name
             if (!bsp.isMapLoaded()) {
-                File bspDir = new File(q2HomeDir + "/" + gameDir + "/maps");
+                File bspDir = new File(daikatanaHomeDir + "/" + gameDir + "/maps");
                 String[] fileList = bspDir.list();
 
                 for (int i = 0; i < fileList.length; i++) {
                     if (fileList[i].toLowerCase().indexOf(".bsp") != -1 && BSPParser
-                            .isMapNameInFile(q2HomeDir + "/" + gameDir + "/maps/" + fileList[i], mapName)) {
-                        bsp.load(q2HomeDir + "/" + gameDir + "/maps/" + fileList[i]);
+                            .isMapNameInFile(daikatanaHomeDir + "/" + gameDir + "/maps/" + fileList[i], mapName)) {
+                        bsp.load(daikatanaHomeDir + "/" + gameDir + "/maps/" + fileList[i]);
                         break;
                     }
                 }
@@ -2064,7 +2068,7 @@ public abstract class BasicBot extends Thread implements Bot {
             // search in PAK files for map name
             if (!bsp.isMapLoaded()) {
                 String foundFile = null;
-                String pakDir = q2HomeDir + "/" + gameDir + "/";
+                String pakDir = daikatanaHomeDir + "/" + gameDir + "/";
 
                 for (int i = 0; i < 10; i++) {
                     foundFile = PAKParser.findBSPFileFromPAK(pakDir + "pak" + i + ".pak", mapName);
@@ -2083,28 +2087,16 @@ public abstract class BasicBot extends Thread implements Bot {
         return bsp.isMapLoaded();
     }
 
-    private String findQuake2HomeDirectory() {
-        q2HomeDir = System.getProperty("QUAKE2");
+    private String findDaikatanaHomeDirectory() {
+        daikatanaHomeDir = System.getProperty(DAIKATANA_HOME_KEY);
 
-/*		// System.getenv not valid on most J2SE platforms
-        if(q2Dir == null || q2Dir.length() == 0)
-		{
-			try
-			{
-				q2Dir = System.getenv("QUAKE2");
-			}
-			catch(Exception e)
-			{	}
-		}
-*/
+        if (daikatanaHomeDir == null || daikatanaHomeDir.length() == 0)
+            daikatanaHomeDir = Utils.parseEnvironmentVariables(DAIKATANA_HOME_KEY);
 
-        if (q2HomeDir == null || q2HomeDir.length() == 0)
-            q2HomeDir = Utils.parseEnvironmentVariables("QUAKE2");
+        if (daikatanaHomeDir == null || daikatanaHomeDir.length() == 0)
+            daikatanaHomeDir = DEFAULT_DAIKATANA_HOME_PATH;
 
-        if (q2HomeDir == null || q2HomeDir.length() == 0)
-            q2HomeDir = "c:/quake2";
-
-        return q2HomeDir;
+        return daikatanaHomeDir;
     }
 
 /*-------------------------------------------------------------------*/
