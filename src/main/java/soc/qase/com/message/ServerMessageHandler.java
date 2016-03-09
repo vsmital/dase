@@ -66,6 +66,7 @@ public abstract class ServerMessageHandler extends Observable {
             else if (message instanceof ServerPacketEntities) processServerPacketEntities((ServerPacketEntities) message);
             else if (message instanceof ServerDeltaPacketEntities) LOGGER.debug("Received: ServerDeltaPacketEntities");
             else if (message instanceof ServerFrame) processServerFrame((ServerFrame) message);
+            else if (message instanceof ServerMessagePrefix) LOGGER.debug("Received: ServerMessagePrefix");
         } catch (Exception e) {
             LOGGER.error("Error occured", e);
         }
@@ -157,7 +158,6 @@ public abstract class ServerMessageHandler extends Observable {
     protected void processServerConfigString(ServerConfigString message) {
         LOGGER.debug("Processing: ServerConfigString - [" + message.getIndex() + " " + message.getConfigString() + "]");
 
-        //TODO vsmital 18:37 next if is probably only temporal
         if (world != null && world.getConfig() != null) {
             world.getConfig().setConfigString(message.getIndex(), message.getConfigString());
         }

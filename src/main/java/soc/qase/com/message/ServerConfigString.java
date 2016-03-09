@@ -8,14 +8,19 @@ package soc.qase.com.message;
 
 import soc.qase.tools.Utils;
 
-/*-------------------------------------------------------------------*/
-
 /**    Message wrapper used when signalling config string from host
  *	to client. */
 /*-------------------------------------------------------------------*/
 public class ServerConfigString extends Message {
+    private static final int TYPE = 21;
+
+    private static final byte[] SERVER_STUFF_TEXT_PREFIX = new byte[]{ 19, 99, 109, 100 };
+
     private int index = 0;
     private String configString = null;
+
+
+
 
 /*-------------------------------------------------------------------*/
 
@@ -23,13 +28,10 @@ public class ServerConfigString extends Message {
      *    @param data message source. */
 /*-------------------------------------------------------------------*/
     public ServerConfigString(byte[] data, int off) {
-        int length = 0;
+        super(TYPE);
 
-        index = Utils.shortValue(data, off);
-        length = Utils.stringLength(data, off + 2);
-        configString = Utils.stringValue(data, off + 2, length);
-
-        setLength(2 + length + 1);
+        //ServerConfigString is currently not parsable - we'll only set length..
+        setLength(Utils.byteArraySearch(data, SERVER_STUFF_TEXT_PREFIX) - off);
     }
 
 /*-------------------------------------------------------------------*/

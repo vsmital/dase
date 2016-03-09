@@ -25,6 +25,9 @@ public class ServerSpawnBaseline extends Message {
     private static final int TYPE = 22;
     private static final float PI = (float) 3.1415926535;
 
+    private static final byte[] CMD_PREFIX = new byte[]{ 19, 99, 109, 100 };
+    private static final byte[] PRECACHE_PREFIX = new byte[]{ 19, 112, 114, 101, 99, 97, 99, 104, 101 };
+
 
     private Entity entity = null;
     private int offset = 0;
@@ -45,8 +48,6 @@ public class ServerSpawnBaseline extends Message {
 
         setLength(getLength(data, off));
         logHexStringInterpretation(data, off);
-
-        processData();
     }
 
 /*-------------------------------------------------------------------*/
@@ -61,20 +62,12 @@ public class ServerSpawnBaseline extends Message {
     /*-------------------------------------------------------------------*/
 /*-------------------------------------------------------------------*/
     private int getLength(byte[] data, int off) {
-        int delimiterIndex1 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, off + 1);
-        if (delimiterIndex1 != -1) {
-            while (true) {
-                int delimiterIndex2 = Utils.byteArraySearch(data, MESSAGES_INNER_DELIMITER, delimiterIndex1 + 4);
-                if (delimiterIndex2 == -1 || delimiterIndex2 > delimiterIndex1 + 4) {
-                    break;
-                }
-
-                delimiterIndex1 = delimiterIndex2;
-            }
-
-            return delimiterIndex1 + MESSAGES_INNER_DELIMITER.length - off;
+        int cmdIndex = Utils.byteArraySearch(data, CMD_PREFIX, off + 1);
+        if (cmdIndex != -1) {
+            return cmdIndex - off;
         } else {
-            return data.length - off;
+            int precacheIndex = Utils.byteArraySearch(data, PRECACHE_PREFIX, off + 1);
+            return precacheIndex - off;
         }
     }
 

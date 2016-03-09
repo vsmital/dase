@@ -418,7 +418,6 @@ public class Proxy extends ServerMessageHandler implements Runnable {
 /*-------------------------------------------------------------------*/
     public void refreshInventory() {
         sendConsoleCommand("inven");
-        sendConsoleCommand("inven");
     }
 
 /*-------------------------------------------------------------------*/
@@ -711,7 +710,7 @@ public class Proxy extends ServerMessageHandler implements Runnable {
             else if (!inGame && demRecorder.isRecording())
                 demRecorder.addHeader(incomingData);
 
-            if (incomingData != null) {
+            if (incomingData != null && incomingData.length > 8) {
                 int dataIndex = 8;
 
                 int messagesCounter = 0;

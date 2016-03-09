@@ -18,6 +18,7 @@ import soc.qase.com.message.ServerDownload;
 import soc.qase.com.message.ServerFrame;
 import soc.qase.com.message.ServerInventory;
 import soc.qase.com.message.ServerLayout;
+import soc.qase.com.message.ServerMessagePrefix;
 import soc.qase.com.message.ServerMonsterMuzzleFlash;
 import soc.qase.com.message.ServerNop;
 import soc.qase.com.message.ServerPacketEntities;
@@ -73,6 +74,7 @@ public class ServerPacket extends Packet {
         else if (messageType == 26) message = new ServerPacketEntities(data, offset + 1); //18
         else if (messageType == 27) message = new ServerDeltaPacketEntities(data, offset + 1); //19
         else if (messageType == 28) message = new ServerFrame(data, offset + 1); //20
+        else if (messageType == 44) message = new ServerMessagePrefix(data, offset + 1);
         else if (messageType > 28) {
             messageType = 0;
             message = new ServerBad(data, offset + 1);
