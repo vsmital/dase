@@ -27,7 +27,7 @@ public class ServerTemporaryEntity extends Message {
     private int offset = 0;
     private byte[] data = null;
 
-    private static int serverVersion = 32;
+    private static int serverVersion = 33;
 
 /*-------------------------------------------------------------------*/
 
