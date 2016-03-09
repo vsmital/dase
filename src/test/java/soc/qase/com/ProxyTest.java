@@ -1,6 +1,5 @@
 package soc.qase.com;
 
-import junit.framework.TestCase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,12 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import soc.qase.info.User;
+import soc.qase.test.AbstractTest;
 
 /**
  * Created by Vojtech.Smital on 18.2.2016.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ProxyTest extends TestCase {
+public class ProxyTest extends AbstractTest {
 
     @Mock
     private CommunicationHandler communicator;
@@ -25,9 +25,9 @@ public class ProxyTest extends TestCase {
     @Test
     public void testProcessIncomingDataPacket_challangeProcessing() {
         proxy.setUser(createUser());
-        //proxy.sentChallenge = true;
+        setPrivateFieldValue(proxy, "sentChallenge", true);
 
-        final String hexString = "ffffffff6368616c6c656e67652031323437333032323031";
+        final String hexString = "ffffffff6368616c6c656e67652031303134313238363136";
         proxy.processIncomingDataPacket(hexStringToByteArray(hexString));
     }
 
@@ -35,7 +35,7 @@ public class ProxyTest extends TestCase {
     @Test
     public void testProcessIncomingDataPacket_clientConnectProcessing() {
         proxy.setUser(createUser());
-        //proxy.sentConnect = true;
+        setPrivateFieldValue(proxy, "sentConnect", true);
 
         final String hexString = "ffffffff636c69656e745f636f6e6e656374";
         proxy.processIncomingDataPacket(hexStringToByteArray(hexString));
