@@ -192,4 +192,9 @@ public abstract class ServerMessageHandler extends Observable {
 
         world.setFrame(message);
     }
+
+    //Probably only for mocking purposes...
+    void setWorld(final World world) {
+        this.world = world;
+    }
 }

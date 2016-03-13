@@ -14,6 +14,8 @@ import soc.qase.tools.Utils;
  *	to client. */
 /*-------------------------------------------------------------------*/
 public class ServerPrint extends Message {
+    private static final int TYPE = 18;
+
     private int printLevel = 0;
     private String printString = null;
 
@@ -23,6 +25,8 @@ public class ServerPrint extends Message {
      *    @param data message source. */
 /*-------------------------------------------------------------------*/
     public ServerPrint(byte[] data, int off) {
+        super(TYPE);
+
         int length = 0;
 
         printLevel = (int) data[off];
@@ -31,6 +35,7 @@ public class ServerPrint extends Message {
         printString = Utils.stringValue(data, off + 1, length - 1);
 
         setLength(1 + length + 1);
+        logHexStringInterpretation(data, off);
     }
 
 /*-------------------------------------------------------------------*/

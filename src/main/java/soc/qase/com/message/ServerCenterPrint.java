@@ -13,6 +13,10 @@ import soc.qase.tools.Utils;
 /**    A message containing text to be printed in the centre of the screen. */
 /*-------------------------------------------------------------------*/
 public class ServerCenterPrint extends Message {
+    private static final int TYPE = 23;
+    //this is probably related to size of displayed text or colour, it doesn't matter for us anyway
+    private static final byte MESSAGE_POSTFIX_LENGTH = 3;
+
     private String text_message = null;
 
 /*-------------------------------------------------------------------*/
@@ -21,10 +25,14 @@ public class ServerCenterPrint extends Message {
      *    @param data message source */
 /*-------------------------------------------------------------------*/
     public ServerCenterPrint(byte[] data, int off) {
+        super(TYPE);
+
         int strLength = Utils.stringLength(data, off);
         text_message = Utils.stringValue(data, off, strLength);
 
-        setLength(strLength + 1);
+        setLength(strLength + 1 + MESSAGE_POSTFIX_LENGTH);
+
+        logHexStringInterpretation(data, off);
     }
 
 /*-------------------------------------------------------------------*/
