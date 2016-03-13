@@ -31,7 +31,16 @@ public class ServerConfigString extends Message {
         super(TYPE);
 
         //ServerConfigString is currently not parsable - we'll only set length..
-        setLength(Utils.byteArraySearch(data, SERVER_STUFF_TEXT_PREFIX) - off);
+        int serverStuffTextPrefixIndex = Utils.byteArraySearch(data, SERVER_STUFF_TEXT_PREFIX);
+        if (serverStuffTextPrefixIndex != -1) {
+            setLength(Utils.byteArraySearch(data, SERVER_STUFF_TEXT_PREFIX) - off);
+        } else {
+            index = Utils.shortValue(data, off);
+
+            int length = Utils.stringLength(data, off + 2);
+            configString = Utils.stringValue(data, off + 2, length);
+            setLength(2 + Utils.stringLength(data, off + 2) + 1);
+        }
     }
 
 /*-------------------------------------------------------------------*/

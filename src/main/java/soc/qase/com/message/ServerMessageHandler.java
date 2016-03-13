@@ -158,9 +158,7 @@ public abstract class ServerMessageHandler extends Observable {
     protected void processServerConfigString(ServerConfigString message) {
         LOGGER.debug("Processing: ServerConfigString - [" + message.getIndex() + " " + message.getConfigString() + "]");
 
-        if (world != null && world.getConfig() != null) {
-            world.getConfig().setConfigString(message.getIndex(), message.getConfigString());
-        }
+        world.getConfig().setConfigString(message.getIndex(), message.getConfigString());
     }
 
     /*-------------------------------------------------------------------*/

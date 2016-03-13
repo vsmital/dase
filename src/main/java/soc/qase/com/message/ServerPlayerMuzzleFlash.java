@@ -15,6 +15,8 @@ import soc.qase.tools.Utils;
  *    @see soc.qase.state.Effects
 /*-------------------------------------------------------------------*/
 public class ServerPlayerMuzzleFlash extends Message {
+    private static final int TYPE = 9;
+
     private int playerEntity = 0;
     private int effect = 0;
 
@@ -24,9 +26,13 @@ public class ServerPlayerMuzzleFlash extends Message {
      *    @param data message source. */
 /*-------------------------------------------------------------------*/
     public ServerPlayerMuzzleFlash(byte[] data, int off) {
+        super(TYPE);
+
         playerEntity = Utils.shortValue(data, off);
         effect = (int) data[off + 2];
-        setLength(3);
+        setLength(6);
+
+        logHexStringInterpretation(data, off);
     }
 
 /*-------------------------------------------------------------------*/

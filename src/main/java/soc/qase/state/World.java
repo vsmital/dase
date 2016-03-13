@@ -770,5 +770,4 @@ public class World {
     public synchronized Config getConfig() {
         return config;
     }
-
 }

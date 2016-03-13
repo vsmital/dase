@@ -14,6 +14,8 @@ import soc.qase.tools.Utils;
  *	to client. */
 /*-------------------------------------------------------------------*/
 public class ServerFrame extends Message {
+    private static final int TYPE = 28;
+
     private int frame = 0;
     private int count = 0;
     private int deltaFrame = 0;
@@ -24,8 +26,7 @@ public class ServerFrame extends Message {
      *    @param data message source. */
 /*-------------------------------------------------------------------*/
     public ServerFrame(byte[] data, int off) {
-        int offset = 0;
-        int entityNumber = 0;
+        super(TYPE);
 
         frame = Utils.intValue(data, off);
         deltaFrame = Utils.intValue(data, off + 4);
@@ -36,6 +37,8 @@ public class ServerFrame extends Message {
             count = count + 256;
 
         setLength(count + 10);
+
+        logHexStringInterpretation(data, off);
     }
 
 /*-------------------------------------------------------------------*/
